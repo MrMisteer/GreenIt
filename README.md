@@ -1,1 +1,1 @@
-# GreenIt
+# GreenIt : Site de recettes écologiques
