@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
     <router-view/>
+
+    <p> GROS TEST</p>
   </div>
 </template>
 
