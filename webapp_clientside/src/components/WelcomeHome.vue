@@ -54,9 +54,14 @@
                 </div>
             </div>
         </section>
-    </div>
+    </div> <div> v-for = "nom in noms"
+    {{nom.nom}} {{nom.prenom}} </div>
   </div>
-</template>
+</template> <script> import axios from "axios"; 
+export default {
+data(){return{
+noms:[]};},
+methods 
 
 <style scoped>
         body {
