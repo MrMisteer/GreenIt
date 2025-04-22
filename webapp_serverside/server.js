@@ -26,11 +26,6 @@ app.use(session({
   resave: false
 }));
 
-//Middleware : Initiate password
-const auth = require('./utils/users.auth');
-auth.initializeAuthentications(app);
-app.use('/auth', require('./controllers/auth.route')); // Import the auth.route.js
-
 //Middleware : Parsing JSON requests
 app.use(express.json());
 
@@ -55,34 +50,11 @@ db.connect((err) => {
   }
 });
 
-// Routers API
-const toornamentRoutes = require('./controllers/toornamentapi.route');
-const teamRoutes = require('./controllers/teamapi.route');
-const playerRoutes = require('./controllers/playerapi.route');
-const belongRoutes = require('./controllers/belongapi.route');
-const matchRoutes = require('./controllers/matchapi.route');
-const playRoutes = require('./controllers/playapi.route');
+const testRoutes = require('./controllers/testapi.route');
 
 
 // Define the routers
-app.use('/api/toornament', toornamentRoutes);
-app.use('/api/teams', teamRoutes);
-app.use('/api/players', playerRoutes);
-app.use('/api/belong', belongRoutes);
-app.use('/api/matches', matchRoutes);
-app.use('/api/play', playRoutes);
-
-
-// Verify the connection to the database
-app.get('/test', (req, res) => {
-  db.query('SELECT 1', (err, results) => {
-    if (err) {
-      console.error('Error while connecting to the databse:', err.message);
-      return res.status(500).json({ message: 'Error database connexion' });
-    }
-    res.json({ message: 'Connexion MySQL OK !', results });
-  });
-});
+app.use('/api/test', testRoutes);
 
 // Start the server
 app.listen(port, () => {

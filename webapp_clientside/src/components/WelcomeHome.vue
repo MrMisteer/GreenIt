@@ -54,14 +54,44 @@
                 </div>
             </div>
         </section>
-    </div> <div> v-for = "nom in noms"
-    {{nom.nom}} {{nom.prenom}} </div>
+    </div> 
+    <div v-for="nom in names" :key="nom.id" class="container">
+  <p>{{ nom.nom }} - {{ nom.age }} ans - {{ nom.email }}</p>
+</div>
   </div>
-</template> <script> import axios from "axios"; 
+</template> 
+
+
+<script>
+
+import axios from "axios";
+
+
 export default {
-data(){return{
-noms:[]};},
-methods 
+  data() {
+    return {
+      names: [],
+    };
+  },
+  methods: {
+    async fetchnames() {
+      console.log("Fetching names from API...");
+      try {
+        const response = await axios.get(`http://localhost:3000/api/test`);
+        this.names = response.data;
+        console.log("Reçus :", this.names);
+      } catch (error) {
+        console.error("Erreur lors du fetch :", error);
+      }
+    },
+  },
+  mounted() {
+    this.fetchnames();
+  },
+};
+
+</script>
+
 
 <style scoped>
         body {
