@@ -1,0 +1,143 @@
+/* === STYLE GÉNÉRAL === */
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 130%;
+    margin: 0;
+    background-color: #f8f8f8;
+}
+
+.container {
+    padding: 40px;
+}
+
+h1,
+h2,
+h3 {
+    color: #222;
+}
+
+.btn {
+    background-color: black;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+
+/* === HEADER === */
+
+header {
+    background-color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+}
+
+nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+
+/* === SECTION "Soyez Verts" === */
+
+.eco-engagements ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+.eco-engagements h3 {
+    margin-top: 30px;
+}
+
+
+/* === CATALOGUE DE SAISON === */
+
+.seasons {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.season-card {
+    background: #fff;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    min-width: 200px;
+    max-width: 250px;
+    border-radius: 8px;
+}
+
+.season-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+
+/* === RECETTES AVEC FILTRES === */
+
+.filters {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.cards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    width: 280px;
+}
+
+.card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+
+/* === FORMULAIRES CONNEXION / INSCRIPTION === */
+
+form {
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input {
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
