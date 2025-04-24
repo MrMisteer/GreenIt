@@ -6,7 +6,7 @@ module.exports = {
     async fetchallnames() {
         try {
         const query = `
-            SELECT * FROM test`;
+            SELECT * FROM recipes`;
         const [names] = await db.query(query);
         return names;
         } catch (error) {

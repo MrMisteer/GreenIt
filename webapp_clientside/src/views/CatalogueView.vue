@@ -8,10 +8,10 @@
           <label for="season">Saison :</label>
           <select v-model="filtre.saison" id="season">
             <option value="">-- Toutes --</option>
-            <option value="Hiver">Hiver</option>
-            <option value="Printemps">Printemps</option>
-            <option value="Été">Été</option>
-            <option value="Automne">Automne</option>
+            <option value="hiver">Hiver</option>
+            <option value="printemps">Printemps</option>
+            <option value="été">Été</option>
+            <option value="automne">Automne</option>
           </select>
         </div>
         <div class="filter-group">
@@ -19,8 +19,13 @@
           <input type="number" v-model="filtre.personnes" id="personnes" placeholder="Ex: 2" min="1">
         </div>
         <div class="filter-group">
-          <label for="co2">Quantité max de CO2 (en g) :</label>
-          <input type="number" v-model="filtre.co2Max" id="co2" placeholder="Ex: 150" min="1">
+          <label for="co2">Quantité de CO2 :</label>
+          <select v-model="filtre.co2Max" id="co2">
+            <option value="">-- Toutes --</option>
+            <option value="faible">Faible</option>
+            <option value="moyen">Moyenne</option>
+            <option value="elevee">Élevée</option>
+          </select>
         </div>
         <div class="filter-group">
   <label style="visibility: hidden">Boutons</label>
@@ -39,11 +44,11 @@
           :key="recette.id"
           class="card"
         >
-          <img :src="recette.image" :alt="recette.nom">
+          <img :src="recette.image_url" :alt="recette.nom">
           <h3>{{ recette.nom }}</h3>
           <p>{{ recette.description }}</p>
-          <p><strong>Saison :</strong> {{ recette.saison }}</p>
-          <p><strong>CO2 :</strong> {{ recette.co2 }}g</p>
+          <p><strong>Saison :</strong> {{ recette.season }}</p>
+          <p><strong>CO2 :</strong> {{ recette.carbon_footprint }}</p>
           <p><strong>Personnes :</strong> {{ recette.personnes }}</p>
           <button class="btn" @click="ajouterFavori(recette)">Ajouter aux favoris</button>
         </div>
@@ -52,6 +57,9 @@
   </template>
   
   <script>
+
+  import axios from 'axios';
+
   export default {
     name: 'Catalogue',
     data() {
@@ -59,55 +67,27 @@
         utilisateurConnecte: false,
         filtre: {
           saison: '',
-          co2Max: null,
+          co2Max: "",
           personnes: null
         },
-        recettes: [
-          {
-            id: 1,
-            nom: 'Salade printanière',
-            description: 'Légumes frais et croquants pour le printemps',
-            saison: 'Printemps',
-            co2: 80,
-            personnes: 2,
-            image: 'img/printemps.jpg'
-          },
-          {
-            id: 2,
-            nom: 'Bruschetta d\'été',
-            description: 'Pain grillé, tomates fraîches, basilic',
-            saison: 'Été',
-            co2: 120,
-            personnes: 2,
-            image: 'img/ete.jpg'
-          },
-          {
-            id: 3,
-            nom: 'Soupe d\'automne',
-            description: 'Potimarron, carottes et épices douces',
-            saison: 'Automne',
-            co2: 90,
-            personnes: 3,
-            image: 'img/automne.jpg'
-          },
-          {
-            id: 4,
-            nom: 'Soupe d\'hiver',
-            description: 'Une soupe chaude avec des légumes racines.',
-            saison: 'Hiver',
-            co2: 220,
-            personnes: 4,
-            image: 'img/hiver.jpg'
-          }
-        ],
+        recettes: [],
         recettesFiltrees: []
       };
     },
     mounted() {
+      this.fetchRecipe();
       this.utilisateurConnecte = localStorage.getItem('utilisateurConnecte') === 'true';
-      this.recettesFiltrees = [...this.recettes];
-    },
+        },
     methods: {
+      async fetchRecipe() {
+      try {
+        const response = await axios.get(`http://localhost:3000/api/recipe`);
+        this.recettes = response.data;
+        this.recettesFiltrees = [...this.recettes];
+      } catch (error) {
+        console.error("Error loading recipe:", error);
+      }},
+      
       ajouterFavori(recette) {
         if (!this.utilisateurConnecte) {
           alert('Vous devez être connecté pour ajouter aux favoris.');
@@ -123,14 +103,17 @@
           alert('Cette recette est déjà dans vos favoris.');
         }
       },
+
       appliquerFiltres() {
-        this.recettesFiltrees = this.recettes.filter(recette => {
-          const saisonOK = this.filtre.saison === '' || recette.saison === this.filtre.saison;
-          const co2OK = this.filtre.co2Max === null || recette.co2 <= this.filtre.co2Max;
-          const personnesOK = this.filtre.personnes === null || recette.personnes === this.filtre.personnes;
-          return saisonOK && co2OK && personnesOK;
-        });
-      },
+    this.recettesFiltrees = this.recettes.filter(recette => {
+    const saisonOK = this.filtre.saison === '' || recette.season.toLowerCase() === this.filtre.saison;
+    const personnesOK = this.filtre.personnes === null || recette.personnes === this.filtre.personnes;
+    const co2OK = this.filtre.co2Max === '' || recette.carbon_footprint.toLowerCase() === this.filtre.co2Max;
+
+    return saisonOK && personnesOK && co2OK;
+  });
+},
+
       reinitialiserFiltres() {
         this.filtre.saison = '';
         this.filtre.co2Max = null;

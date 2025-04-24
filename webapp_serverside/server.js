@@ -37,8 +37,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const dbConfig = {
   host: process.env.DB_HOST || 'localhost',
   user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '1234baltha',
-  database: process.env.DB_NAME || 'green_recipes_db',
+  password: process.env.DB_PASSWORD || '123456789',
+  database: process.env.DB_NAME || 'eco_cook',
 };
 const db = mysql.createConnection(dbConfig);
 db.connect((err) => {
@@ -50,11 +50,11 @@ db.connect((err) => {
   }
 });
 
-const testRoutes = require('./controllers/testapi.route');
+const recipeRoutes = require('./controllers/recipeapi.route');
 
 
 // Define the routers
-app.use('/api/test', testRoutes);
+app.use('/api/recipe', recipeRoutes);
 
 // Start the server
 app.listen(port, () => {
