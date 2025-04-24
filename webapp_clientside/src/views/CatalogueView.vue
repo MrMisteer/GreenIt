@@ -129,7 +129,7 @@
     padding: 40px;
   }
 
-  #season {
+  #season, #co2 {
   width: 250px;
   font-size: 18px;
   padding: 6px 10px;
@@ -148,18 +148,11 @@
   
 }
 .filters button {
-  height: 40px;
+  
   margin-bottom: 8px;
   
 }
 
-  
-  .filter-group {
-    display: flex;
-    flex-direction: column;
-    
-  }
-  
   .cards {
     display: flex;
     gap: 20px;
