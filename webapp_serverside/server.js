@@ -37,8 +37,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const dbConfig = {
   host: process.env.DB_HOST || 'localhost',
   user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '123456789',
-  database: process.env.DB_NAME || 'test2',
+  password: process.env.DB_PASSWORD || '1234baltha',
+  database: process.env.DB_NAME || 'green_recipes_db',
 };
 const db = mysql.createConnection(dbConfig);
 db.connect((err) => {
