@@ -151,3 +151,20 @@ select * from recipes;
 select * from seasonal_catalog;
 select * from favorites, ingredients, recipe_ingredients, recipes, seasonal_catalog, users;
 select *from users
+
+-- Mise à jour des URLs d’images 
+UPDATE recipes
+SET image_url = 'https://upload.wikimedia.org/wikipedia/commons/1/1f/Sautéed_vegetables.jpg'
+WHERE title = 'Poêlée de légumes d’été';
+
+UPDATE recipes
+SET image_url = 'https://upload.wikimedia.org/wikipedia/commons/e/e3/Potato_and_leek_soup.jpg'
+WHERE title = 'Velouté de poireaux et pommes de terre';
+
+UPDATE recipes
+SET image_url = 'https://upload.wikimedia.org/wikipedia/commons/5/57/Lentil_and_beet_salad.jpg'
+WHERE title = 'Salade de lentilles et betteraves';
+
+UPDATE recipes
+SET image_url = 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Mushroom_fried_rice.jpg'
+WHERE title = 'Wok de riz complet aux champignons';
