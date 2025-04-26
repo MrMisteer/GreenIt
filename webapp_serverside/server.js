@@ -51,11 +51,12 @@ db.connect((err) => {
 });
 
 const recipeRoutes = require('./controllers/recipeapi.route');
-
-
+const logRoutes = require('./controllers/loginapi.route');
+const registerRoutes = require('./controllers/registerapi.route');
 // Define the routers
 app.use('/api/recipe', recipeRoutes);
-
+app.use('/api/login', logRoutes);
+app.use('/api/register', registerRoutes);
 // Start the server
 app.listen(port, () => {
   console.log(`The server is on the port : ${port}`);

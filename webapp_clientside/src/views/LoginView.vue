@@ -15,6 +15,9 @@
   </template>
   
   <script>
+
+  import axios from 'axios';
+
   export default {
     name: 'Login',
     data() {
@@ -24,22 +27,28 @@
       }
     },
     methods: {
-        handleLogin() {
-        const utilisateur = JSON.parse(localStorage.getItem('utilisateurInscrit'));
+  async handleLogin() { 
+    try {
+      const response = await axios.post('http://localhost:3000/api/login', {
+        email: this.email, // Utilisez les données du formulaire
+        password: this.password
+      });
 
-  if (
-    utilisateur &&
-    utilisateur.email === this.email &&
-    utilisateur.password === this.password
-  ) {
-    localStorage.setItem('utilisateurConnecte', 'true');
-    this.$router.push('/');
-  } else {
-    alert('Email ou mot de passe incorrect');
+      const data = response.data;
+
+      if (data.token) { // Vérifiez si un token est retourné
+        localStorage.setItem('utilisateurConnecte', 'true');
+        localStorage.setItem('token', data.token); // Stockez le token JWT
+        this.$router.push('/'); // Redirigez vers la page d'accueil
+      } else {
+        alert('Email ou mot de passe incorrect');
+      }
+    } catch (error) {
+      console.error('Erreur lors de la connexion vue:', error);
+      alert('Une erreur est survenue. Veuillez réessayer.');
+    }
   }
 }
-
-    }
   }
   </script>
   
@@ -76,4 +85,3 @@
     cursor: pointer;
   }
   </style>
-  

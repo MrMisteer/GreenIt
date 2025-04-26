@@ -18,6 +18,9 @@
   </template>
   
   <script>
+
+  import axios from 'axios';
+
   export default {
     name: 'Register',
     data() {
@@ -28,16 +31,26 @@
       }
     },
     methods: {
-      handleRegister() {
-        // Stockage simple dans localStorage (à remplacer par une vraie BDD dans un vrai projet)
-        const utilisateur = {
-          nom: this.nom,
-          email: this.email,
-          password: this.password
+      async handleRegister() {
+        try {
+          const utilisateur = {
+            nom: this.nom,
+            email: this.email,
+            password: this.password
+          };
+
+          const response = await axios.post('http://localhost:3000/api/register', utilisateur);
+
+          if (response.status === 201) {
+            alert('Inscription réussie !');
+            this.$router.push('/login'); // Redirige vers la page de connexion après l'inscription
+          } else {
+            alert('Erreur lors de l\'inscription. Veuillez réessayer.');
+          }
+        } catch (error) {
+          console.error('Erreur lors de l\'inscription :', error);
+          alert('Une erreur est survenue. Veuillez réessayer.');
         }
-        localStorage.setItem('utilisateurInscrit', JSON.stringify(utilisateur));
-        alert('Inscription réussie ! Vous pouvez maintenant vous connecter.');
-        this.$router.push('/login');
       }
     }
   }
@@ -78,4 +91,3 @@
     
   }
   </style>
-  
