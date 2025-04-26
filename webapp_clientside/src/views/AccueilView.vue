@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <!-- SECTION : ENGAGEMENTS -->
     <section class="eco-engagements">
       <h2>Soyez Verts ! Nos engagements éco-responsables</h2>
       <p>
@@ -13,7 +12,6 @@
       </ul>
     </section>
 
-    <!-- SECTION : CATALOGUE DE SAISON -->
     <section class="section">
       <h2>Catalogue de Saison</h2>
       <div class="seasons">
@@ -56,7 +54,7 @@ export default {
 
 .eco-engagements {
   margin-bottom: 40px;
-  font-size: 1.3rem; /* Ajoute cette ligne */
+  font-size: 1.3rem;
 }
 
 .eco-engagements ul {
@@ -74,7 +72,7 @@ export default {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
-  font-size: 1.3rem; /* Ajoute cette ligne */
+  font-size: 1.3rem;
 
 }
 

@@ -35,10 +35,6 @@ CREATE TABLE favorites (
 );
 
 
--- Insertion Utilisateurs
-INSERT INTO users (email, password_hash, role, username) VALUES
-('eco_chef@greenit.com', 'hashedpassword3', 'user', 'eco_chef'),
-('veggie_lover@greenit.com', 'hashedpassword4', 'user', 'veggie_lover');
 
 -- Insertion Recettes
 INSERT INTO recipes (title, description, instructions, image_url, season, carbon_footprint, personnes) VALUES

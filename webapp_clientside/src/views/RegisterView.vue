@@ -43,7 +43,7 @@
 
           if (response.status === 201) {
             alert('Inscription réussie !');
-            this.$router.push('/login'); // Redirige vers la page de connexion après l'inscription
+            this.$router.push('/login');
           } else {
             alert('Erreur lors de l\'inscription. Veuillez réessayer.');
           }

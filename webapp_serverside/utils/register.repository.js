@@ -1,10 +1,7 @@
 const db = require('./db.include');
-
 module.exports = {
-  // Vérifie si un utilisateur existe déjà par email
   async findUserByEmail(email) {
     try {
-        console.log('Email à vérifier :', email); // Ajout de la ligne de log
       const query = 'SELECT * FROM users WHERE email = ?';
       const [rows] = await db.query(query, [email]);
       return rows;
@@ -13,8 +10,6 @@ module.exports = {
       throw error;
     }
   },
-
-  // Insère un nouvel utilisateur dans la base de données
   async createUser(email, hashedPassword, username) {
     try {
       const query = `

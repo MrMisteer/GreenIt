@@ -1,8 +1,6 @@
 const db = require('./db.include');
 
 module.exports = {
-
-
     async fetchallnames() {
         try {
         const query = `

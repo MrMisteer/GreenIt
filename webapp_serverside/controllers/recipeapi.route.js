@@ -5,7 +5,6 @@ const testRepo = require('../utils/recipe.repository');
 
 // Route GET /api/test
 router.get('/', async (req, res) => {
-  console.log("Request received at /api/test");
   try {
     const nameexist = await testRepo.fetchallnames();
     if (!nameexist || nameexist.length === 0) {
