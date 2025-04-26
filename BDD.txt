@@ -1,7 +1,8 @@
+DROP DATABASE IF EXISTS eco_cook;
 CREATE DATABASE IF NOT EXISTS Eco_Cook;
 USE Eco_Cook;
 
--- Utilisateurs
+-- Table Utilisateurs
 CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(100) NOT NULL UNIQUE,
@@ -11,7 +12,7 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Recettes
+-- Table Recettes
 CREATE TABLE recipes (
     id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(100) NOT NULL,
@@ -20,28 +21,11 @@ CREATE TABLE recipes (
     image_url VARCHAR(255),
     season ENUM('printemps', 'été', 'automne', 'hiver'),
     carbon_footprint ENUM('faible', 'moyen', 'élevé'),
+    personnes INT DEFAULT 2,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Ingrédients
-CREATE TABLE ingredients (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL UNIQUE,
-    is_local BOOLEAN DEFAULT TRUE
-);
-
--- Recette - Ingrédients (liaison many-to-many)
-CREATE TABLE recipe_ingredients (
-    recipe_id INT,
-    ingredient_id INT,
-    quantity VARCHAR(50),
-    unit VARCHAR(20),
-    PRIMARY KEY (recipe_id, ingredient_id),
-    FOREIGN KEY (recipe_id) REFERENCES recipes(id) ON DELETE CASCADE,
-    FOREIGN KEY (ingredient_id) REFERENCES ingredients(id) ON DELETE CASCADE
-);
-
--- Favoris utilisateur
+-- Table Favoris Utilisateurs
 CREATE TABLE favorites (
     user_id INT,
     recipe_id INT,
@@ -50,121 +34,42 @@ CREATE TABLE favorites (
     FOREIGN KEY (recipe_id) REFERENCES recipes(id) ON DELETE CASCADE
 );
 
--- Catalogue saisonnier (fruits/légumes de saison)
-CREATE TABLE seasonal_catalog (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100),
-    type ENUM('fruit', 'légume'),
-    season ENUM('printemps', 'été', 'automne', 'hiver')
-);
 
-
-
--- Ajout d'autres utilisateurs
+-- Insertion Utilisateurs
 INSERT INTO users (email, password_hash, role, username) VALUES
 ('eco_chef@greenit.com', 'hashedpassword3', 'user', 'eco_chef'),
 ('veggie_lover@greenit.com', 'hashedpassword4', 'user', 'veggie_lover');
 
--- Nouveaux ingrédients
-INSERT INTO ingredients (name, is_local) VALUES
-('Courgette', TRUE),
-('Carotte', TRUE),
-('Épinard', TRUE),
-('Poireau', TRUE),
-('Champignon', TRUE),
-('Betterave', TRUE),
-('Patate douce', TRUE),
-('Citron', TRUE),
-('Lentilles', TRUE),
-('Riz complet', TRUE);
-
--- Nouvelles recettes
-INSERT INTO recipes (title, description, instructions, image_url, season, carbon_footprint) VALUES
+-- Insertion Recettes
+INSERT INTO recipes (title, description, instructions, image_url, season, carbon_footprint, personnes) VALUES
 ('Poêlée de légumes d’été', 
  'Un plat rapide avec des légumes locaux.', 
  'Faire revenir courgette, carotte, et épinards à la poêle avec huile d’olive.', 
- 'images/poelee.jpg', 
+ 'https://static.750g.com/images/640-440/598acece636c41748b89efd297ea6cec/poelee-et-poulet-7400a.jpg', 
  'été', 
- 'faible'),
+ 'faible',
+ 2),
 
 ('Velouté de poireaux et pommes de terre', 
  'Un classique hivernal, simple et bon.', 
  'Faire cuire poireaux et pommes de terre, puis mixer.', 
- 'images/veloute.jpg', 
+ 'https://www.papillesetpupilles.fr/wp-content/uploads/2015/01/Velout%C3%A9-poireaux-pommes-de-terre-persil.jpg', 
  'hiver', 
- 'faible'),
+ 'faible',
+ 4),
 
 ('Salade de lentilles et betteraves', 
  'Salade froide, riche en fibres et locale.', 
  'Faire cuire lentilles, ajouter betteraves râpées, assaisonner avec citron.', 
- 'images/salade_lentilles.jpg', 
+ 'https://media.hachette.fr/fit-in/750x488/28/2025-03/inratables-express-salade.jpg', 
  'automne', 
- 'faible'),
+ 'faible',
+ 2),
 
 ('Wok de riz complet aux champignons', 
  'Un plat équilibré avec un faible impact.', 
  'Cuire riz complet, faire sauter champignons et ajouter sauce soja.', 
- 'images/wok.jpg', 
+ 'https://storage.canalblog.com/70/60/743537/101180117_o.jpg', 
  'printemps', 
- 'moyen');
-
--- Lien nouvelles recettes <-> ingrédients
-INSERT INTO recipe_ingredients (recipe_id, ingredient_id, quantity, unit) VALUES
-(3, 1, '1', 'pièce'),   -- Courgette
-(3, 2, '2', 'pièces'),  -- Carotte
-(3, 3, '1 poignée', ''),  -- Épinard
-
-(4, 4, '2', 'tiges'),  -- Poireau
-(4, 7, '2', 'pièces'),  -- Pomme de terre (déjà ajoutée avant)
-
-(5, 9, '100', 'g'),    -- Lentilles
-(5, 6, '1', 'pièce'),  -- Betterave
-(5, 8, '1/2', 'pièce'),  -- Citron
-
-(6, 10, '1 bol', ''),   -- Riz complet
-(6, 5, '150', 'g');    -- Champignon
-
--- Favoris supplémentaires
-INSERT INTO favorites (user_id, recipe_id) VALUES
-(1, 3),
-(1, 4),
-(2, 5),
-(2, 6);
-
--- Catalogue saisonnier enrichi
-INSERT INTO seasonal_catalog (name, type, season) VALUES
-('Courgette', 'légume', 'été'),
-('Carotte', 'légume', 'automne'),
-('Épinard', 'légume', 'printemps'),
-('Poireau', 'légume', 'hiver'),
-('Betterave', 'légume', 'automne'),
-('Champignon', 'légume', 'automne'),
-('Patate douce', 'légume', 'hiver'),
-('Citron', 'fruit', 'hiver'),
-('Lentilles', 'légume', 'automne'),
-('Riz complet', 'légume', 'printemps');
-
-select * from favorites;
-select * from ingredients;
-/*select * from recipe_ingredients;*/
-select * from recipes;
-select * from seasonal_catalog;
-select * from favorites, ingredients, recipe_ingredients, recipes, seasonal_catalog, users;
-select *from users
-
--- Mise à jour des URLs d’images 
-UPDATE recipes
-SET image_url = 'https://upload.wikimedia.org/wikipedia/commons/1/1f/Sautéed_vegetables.jpg'
-WHERE title = 'Poêlée de légumes d’été';
-
-UPDATE recipes
-SET image_url = 'https://upload.wikimedia.org/wikipedia/commons/e/e3/Potato_and_leek_soup.jpg'
-WHERE title = 'Velouté de poireaux et pommes de terre';
-
-UPDATE recipes
-SET image_url = 'https://upload.wikimedia.org/wikipedia/commons/5/57/Lentil_and_beet_salad.jpg'
-WHERE title = 'Salade de lentilles et betteraves';
-
-UPDATE recipes
-SET image_url = 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Mushroom_fried_rice.jpg'
-WHERE title = 'Wok de riz complet aux champignons';
+ 'moyen',
+ 3);

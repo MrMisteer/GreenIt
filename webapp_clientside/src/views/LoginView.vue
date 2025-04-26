@@ -25,7 +25,7 @@
     },
     methods: {
         handleLogin() {
-  const utilisateur = JSON.parse(localStorage.getItem('utilisateurInscrit'));
+        const utilisateur = JSON.parse(localStorage.getItem('utilisateurInscrit'));
 
   if (
     utilisateur &&

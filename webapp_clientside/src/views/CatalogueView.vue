@@ -45,7 +45,7 @@
           class="card"
         >
           <img :src="recette.image_url" :alt="recette.nom">
-          <h3>{{ recette.nom }}</h3>
+          <h3>{{ recette.title }}</h3>
           <p>{{ recette.description }}</p>
           <p><strong>Saison :</strong> {{ recette.season }}</p>
           <p><strong>CO2 :</strong> {{ recette.carbon_footprint }}</p>
@@ -106,8 +106,9 @@
 
       appliquerFiltres() {
     this.recettesFiltrees = this.recettes.filter(recette => {
+    console.log(this.filtre.personnes, recette.personnes, Number(this.filtre.personnes) === recette.personnes);
     const saisonOK = this.filtre.saison === '' || recette.season.toLowerCase() === this.filtre.saison;
-    const personnesOK = this.filtre.personnes === null || recette.personnes === this.filtre.personnes;
+    const personnesOK = this.filtre.personnes === null || recette.personnes === Number(this.filtre.personnes);
     const co2OK = this.filtre.co2Max === '' || recette.carbon_footprint.toLowerCase() === this.filtre.co2Max;
 
     return saisonOK && personnesOK && co2OK;
@@ -116,7 +117,7 @@
 
       reinitialiserFiltres() {
         this.filtre.saison = '';
-        this.filtre.co2Max = null;
+        this.filtre.co2Max = "";
         this.filtre.personnes = null;
         this.recettesFiltrees = [...this.recettes];
       }
