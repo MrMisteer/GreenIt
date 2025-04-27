@@ -14,7 +14,6 @@ EcoCook est une plateforme web écoresponsable qui propose des recettes de cuisi
 ### Étapes
 
 **Cloner le dépôt**
-   ```bash
    git clone https://github.com/<votre-utilisateur>/GreenIt.git
    cd GreenIt
 
